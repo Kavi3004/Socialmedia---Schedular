@@ -14,10 +14,10 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v5
         with:
-          node-version: '22'
+          node-version: '20'
       - run: |
           cd client
-          npm install
+          npm ci
           npm run build
 
   server:
@@ -27,8 +27,8 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v5
         with:
-          node-version: '22'
+          node-version: '20'
       - run: |
           cd server
-          npm install
+          npm ci
           npm run build
