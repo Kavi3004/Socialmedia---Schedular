@@ -22,7 +22,7 @@ const AIComposer = () => {
 
    const fetchGenerations = async () => {
     try {
-      const { data } = await api.get("api/posts/generations")
+      const { data } = await api.get("/api/posts/generations")
       setGenerations(data)
     } catch (error: any) {
       toast.error(error?.response?.data?.message || error?.message);
