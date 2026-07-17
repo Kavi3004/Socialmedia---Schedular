@@ -12,13 +12,20 @@ import { initScheduler } from "./services/schedulerService.js";
 const app = express();
 
 // Database connection
-await connectDB()
+try {
+    await connectDB();
+} catch (error) {
+    console.error("Server started without a working database connection:", error);
+}
 
 // Middleware
-app.use(cors())
+app.use(cors({
+    origin: true,
+    credentials: true,
+}));
 app.use(express.json());
 
-const port = process.env.PORT || 3000;
+const port = Number(process.env.PORT || 3000);
 
 app.get('/', (_req: Request, res: Response) => {
     res.send('Server is Live!');
@@ -39,6 +46,6 @@ app.use((err: any, _req: Request, res: Response, _next: NextFunction)=>{
     res.status(500).send(err?.response?.data?.message || err?.message)
 })
 
-app.listen(port, () => {
-    console.log(`Server is running at http://localhost:${port}`);
+app.listen(port, "0.0.0.0", () => {
+    console.log(`Server is running at http://0.0.0.0:${port}`);
 });

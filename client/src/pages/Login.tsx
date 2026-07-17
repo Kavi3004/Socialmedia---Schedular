@@ -23,7 +23,11 @@ export default function Login() {
             login(data, data.token)
             navigate("/dashboard")
        } catch (error: any) {
-            toast.error(error.response?.data?.message || error?.message)
+            const message = error?.response?.data?.message ||
+                (error?.code === "ERR_NETWORK"
+                    ? "Unable to reach the server. Please check the backend URL or try again shortly."
+                    : error?.message || "Login failed");
+            toast.error(message);
        }finally{
         setLoading(false)
        }
